@@ -8,10 +8,10 @@ public class start {
     private JFrame frame;
     private Cell[][] cellList;
     public start() {
-        size = 50;
+        size = 70;
         frame = new JFrame();
-        frame.setSize(965,990);
-        cellList = new Cell[50][50];
+        frame.setSize(928,950);
+        cellList = new Cell[size][size];
         createCanvas(size, cellList);
         grid board = new grid();
         frame.add(board, BorderLayout.CENTER);
@@ -26,7 +26,7 @@ public class start {
     class grid extends JPanel {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            Integer value = (Integer) 990 / size;
+            Integer value = (Integer) 950 / size;
 
 
             for (int b = 0; b < size; b++) {
@@ -45,11 +45,12 @@ public class start {
                     //g.drawPolyline(new int[]{i * value, i * value}, new int[]{b * value + value, b * value}, 2);
                     // }
                     g.setColor(Color.black);
-                    System.out.println(cellList[i][b].getColour());
-                    if (cellList[i][b].getColour().equals("1")){
+                    //System.out.println(cellList[i][b].getColour());
+                    if (cellList[i][b].getColour().equals("black")){
                         //g.fillRect(value);
                         g.fillRect((int) (value * cellList[i][b].getRow()), (int) (value * cellList[i][b].getCol()), (int) (value), (int) (value));
                     }
+
                 }
 
                 }
