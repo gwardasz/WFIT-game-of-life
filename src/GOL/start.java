@@ -5,15 +5,15 @@ import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class start {
-    private JFrame frame;
-    private Cell[][] cellList;
+    private final JFrame frame;
+    private final Cell[][] cellArr;
     public final int size = 80;
 
     public start() {
         frame = new JFrame();
         frame.setSize(965, 990);
-        cellList = new Cell[size][size];
-        createCanvas(cellList);
+        cellArr = new Cell[size][size];
+        createCanvas(cellArr);
         frame.add(new grid(), BorderLayout.CENTER);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -33,16 +33,16 @@ public class start {
                 for (int x = 0; x < size; x++) {
                     // mam pytanie w tej pętli czy get getRow i getCol to nie powinny gbyć odwrotnie?
                     // bo w sumie kolumna wskazuje na x a rząd na y
-                    if (cellList[y][x].getNextState()== State.DEAD) {
+                    if (cellArr[y][x].getNextState()== State.DEAD) {
                         g.setColor(Color.black);
-                        g.fillRect(value * cellList[y][x].getRow(), value * cellList[y][x].getCol(), value, value);
+                        g.fillRect(value * cellArr[y][x].getRow(), value * cellArr[y][x].getCol(), value, value);
                     }
 
-                    if (cellList[y][x].getNextState()== State.ALIVE) {
+                    if (cellArr[y][x].getNextState()== State.ALIVE) {
                         g.setColor(Color.white);
-                        g.fillRect(value * cellList[y][x].getRow(), value * cellList[y][x].getCol(), value, value);
+                        g.fillRect(value * cellArr[y][x].getRow(), value * cellArr[y][x].getCol(), value, value);
                     }
-                    cellList[y][x].setPreviousState(cellList[y][x].getNextState());
+                    cellArr[y][x].setPreviousState(cellArr[y][x].getNextState());
                 }
             }
             /*
@@ -57,17 +57,17 @@ public class start {
     public void nextState(){
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size ; x++) {
-                int aliveNeighbourhoods = cellList[y][x].checkNeighbors(cellList);
-                    if (cellList[y][x].getPreviousState()==State.DEAD &&
-                            aliveNeighbourhoods == 3){
-                        cellList[y][x].setNextState(State.ALIVE);
+                int aliveNeighbours = cellArr[y][x].checkNeighbors(cellArr);
+                    if (cellArr[y][x].getPreviousState()==State.DEAD &&
+                            aliveNeighbours == 3){
+                        cellArr[y][x].setNextState(State.ALIVE);
                     }
 
-                    else if (cellList[y][x].getPreviousState()==State.ALIVE &&
-                            aliveNeighbourhoods < 2 ||
-                            aliveNeighbourhoods > 3)
-                        cellList[y][x].setNextState(State.DEAD);
-                    else cellList[y][x].setNextState(cellList[y][x].getPreviousState());
+                    else if (cellArr[y][x].getPreviousState()==State.ALIVE &&
+                            aliveNeighbours < 2 ||
+                            aliveNeighbours > 3)
+                        cellArr[y][x].setNextState(State.DEAD);
+                    else cellArr[y][x].setNextState(cellArr[y][x].getPreviousState());
             }
         }
         SwingUtilities.updateComponentTreeUI(frame);
