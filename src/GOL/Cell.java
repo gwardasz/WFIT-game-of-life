@@ -69,11 +69,17 @@ public class Cell {
     public void setNextState(State nextState) {
         this.nextState = nextState;
     }
-    public int getRow() {
-        return row;
-    }
 
     public int getCol() {
         return col;
     }
-}
+
+    public int getRow() {
+        return row;
+    }
+
+        }
+
+
+
+
