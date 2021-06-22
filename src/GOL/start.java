@@ -7,11 +7,11 @@ import java.util.concurrent.TimeUnit;
 public class start {
     private final JFrame frame;
     private final Cell[][] cellArr;
-    public final int size = 80;
+    public final int size = 100;
 
     public start() {
         frame = new JFrame();
-        frame.setSize(965, 990);
+        frame.setSize(915, 937);
         cellArr = new Cell[size][size];
         createCanvas(cellArr);
         frame.add(new grid(), BorderLayout.CENTER);
@@ -31,25 +31,25 @@ public class start {
 
             for (int y = 0; y < size; y++) {
                 for (int x = 0; x < size; x++) {
-                    // mam pytanie w tej pętli czy get getRow i getCol to nie powinny gbyć odwrotnie?
-                    // bo w sumie kolumna wskazuje na x a rząd na y
+
                     if (cellArr[y][x].getNextState()== State.DEAD) {
                         g.setColor(Color.black);
-                        g.fillRect(value * cellArr[y][x].getRow(), value * cellArr[y][x].getCol(), value, value);
+                        g.fillRect(value * cellArr[y][x].getCol(), value * cellArr[y][x].getRow(), value, value);
                     }
 
                     if (cellArr[y][x].getNextState()== State.ALIVE) {
                         g.setColor(Color.white);
-                        g.fillRect(value * cellArr[y][x].getRow(), value * cellArr[y][x].getCol(), value, value);
+                        g.fillRect(value * cellArr[y][x].getCol(), value * cellArr[y][x].getRow(), value, value);
                     }
                     cellArr[y][x].setPreviousState(cellArr[y][x].getNextState());
                 }
             }
-            /*
             try {
-                TimeUnit.SECONDS.sleep((long) 1.5);
-            } catch (InterruptedException ignored){}
-             */
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             nextState();
         }
     }
