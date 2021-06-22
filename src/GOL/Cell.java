@@ -15,11 +15,6 @@ public class Cell {
     public Cell(int row, int col) {
         this.col = col;
         this.row = row;
-        /*
-        if ((this.row == 39 || this.row == 40 || this.row == 41)
-                && (this.col == 39 || this.col == 40 || this.col == 41))
-        this.nextState = State.ALIVE;
-         */
         boolean alive = new Random().nextBoolean();
         if (alive) this.nextState = State.ALIVE;
         else this.nextState = State.DEAD;
@@ -77,8 +72,7 @@ public class Cell {
     public int getRow() {
         return row;
     }
-
-        }
+}
 
 
 
