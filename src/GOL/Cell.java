@@ -1,17 +1,15 @@
 package GOL;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 enum State{
     ALIVE, DEAD
 }
 public class Cell {
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
     private State previousState;
     private State nextState;
-    private final boolean alive = new Random().nextBoolean();
 
 
     public Cell(int row, int col) {
@@ -22,72 +20,38 @@ public class Cell {
                 && (this.col == 39 || this.col == 40 || this.col == 41))
         this.nextState = State.ALIVE;
          */
+        boolean alive = new Random().nextBoolean();
         if (alive) this.nextState = State.ALIVE;
         else this.nextState = State.DEAD;
 
 
 
     }
-    public Cell checkNegative(int row, int col, Cell[][] celllist) {
-        if (col < 0 || row < 0 || col > celllist.length - 1 || row > celllist.length - 1) {
+    public Cell checkNegative(int row, int col, Cell[][] cellArr) {
+        if (col < 0 || row < 0 || col > cellArr.length - 1 || row > cellArr.length - 1) {
             return null;
         } else {
-            return celllist[row][col];
+            return cellArr[row][col];
 
         }
     }
-    public Integer checkNeighbors(Cell[][] celllist) {
-        ArrayList<Cell> neighbors = new ArrayList<>();
-        Cell top = checkNegative(row, col - 1, celllist);
+    public Integer checkNeighbors(Cell[][] cellArr) {
+        int aliveNeighbors = 0;
+        Cell [] neighbours = new Cell[8];
 
-        Cell right = checkNegative(row + 1, col, celllist);
+        neighbours[0] = checkNegative(row, col - 1, cellArr); //top
+        neighbours[1] = checkNegative(row + 1, col, cellArr); //right
+        neighbours[2] = checkNegative(row, col + 1, cellArr); //bottom
+        neighbours[3] = checkNegative(row - 1, col, cellArr); // left
+        neighbours[4] = checkNegative(row + 1, col - 1, cellArr); // topRight
+        neighbours[5] = checkNegative(row - 1, col - 1, cellArr); // topLeft
+        neighbours[6] = checkNegative(row + 1, col + 1, cellArr); // bottomRight
+        neighbours[7] = checkNegative(row - 1, col + 1, cellArr); // bottomLeft
 
-        Cell bottom = checkNegative(row, col + 1, celllist);
-
-        Cell left = checkNegative(row - 1, col, celllist);
-
-        Cell topright = checkNegative(row + 1, col - 1, celllist);
-
-        Cell topleft = checkNegative(row - 1, col - 1, celllist);
-
-        Cell bottomright = checkNegative(row + 1, col + 1, celllist);
-
-        Cell bottomleft = checkNegative(row - 1, col + 1, celllist);
-
-
-        if (top != null && top.getPreviousState()== State.ALIVE) {
-            neighbors.add(top);
-
+        for (Cell neighbour: neighbours){
+            if (neighbour != null && neighbour.getPreviousState()==State.ALIVE) aliveNeighbors++;
         }
-        if (right != null && right.getPreviousState()== State.ALIVE) {
-            neighbors.add(right);
-
-        }
-        if (bottom != null && bottom.getPreviousState()== State.ALIVE) {
-            neighbors.add(bottom);
-
-        }
-        if (left != null && left.getPreviousState()== State.ALIVE) {
-            neighbors.add(left);
-
-        }
-        if (topright != null && topright.getPreviousState()== State.ALIVE) {
-            neighbors.add(topright);
-
-        }
-        if (topleft != null && topleft.getPreviousState()== State.ALIVE) {
-            neighbors.add(topleft);
-
-        }
-        if (bottomright != null && bottomright.getPreviousState()== State.ALIVE) {
-            neighbors.add(bottomright);
-
-        }
-        if (bottomleft != null && bottomleft.getPreviousState()== State.ALIVE) {
-            neighbors.add(bottomleft);
-
-        }
-        return neighbors.size();
+        return aliveNeighbors;
     }
 
     public State getPreviousState() {
