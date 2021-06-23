@@ -14,7 +14,7 @@ public class BoardGenerator extends JFrame implements ActionListener {
 
     public BoardGenerator() {
         setTitle("Board");
-        setSize(750, 750);
+        setSize(1000, 1000);
         setLayout(new GridLayout(100,100));
         setLocationRelativeTo(null);
 
@@ -34,7 +34,7 @@ public class BoardGenerator extends JFrame implements ActionListener {
             JButton[] box = board[y];
             for (int x = 0; x < box.length; x++) {
                 board[y][x] = new JButton();
-                board[y][x].setBounds(y * 45, x * 45, 45, 45);
+                board[y][x].setBounds(y * 55, x * 55, 55, 55);
                 board[y][x].setFont(new Font(board[y][x].getFont().getName(), Font.PLAIN,30));
                 board[y][x].setForeground(Color.black);
                 add(board[y][x]);
