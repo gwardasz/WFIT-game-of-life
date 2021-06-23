@@ -7,6 +7,7 @@ import java.io.*;
 public class start {
     private final JFrame frame;
     private static Cell[][] cellArr;
+    private static boolean niePrzechodzi = false; // weź to pls zmień jak pamiętasz na tą jego angielską nazwę o tych krawędziach
     public final int size = 100;
     int control =0;
     int r=0,gr=0,b=0;
@@ -16,6 +17,7 @@ public class start {
     public static Cell[][] getCellArr() {
         return cellArr;
     }
+    public static boolean isNiePrzechodzi() {return niePrzechodzi;}
 
     public start() {
         frame = new JFrame();
@@ -68,6 +70,7 @@ public class start {
             cellArr = (Cell[][]) in.readObject();
             in.close();
             fileIn.close();
+            start.niePrzechodzi = true;
             return true;
         } catch (FileNotFoundException e){
             System.out.println("File not found");

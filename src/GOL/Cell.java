@@ -30,8 +30,8 @@ public class Cell implements Serializable {
 
     public Cell checkNegative(int row, int col) {
         int size = start.getCellArr().length;
-        boolean niePrzechodzi = false;
-        if (niePrzechodzi){
+
+        if (start.isNiePrzechodzi()){
             if (col < 0 || row < 0 || col > size - 1 ||
                     row > size - 1)
                 return null;
