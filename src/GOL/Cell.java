@@ -1,13 +1,13 @@
 package GOL;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Random;
 
 enum State{
     ALIVE, DEAD
 }
 
-public class Cell {
+public class Cell implements Serializable {
     private final int row;
     private final int col;
     private State previousState;

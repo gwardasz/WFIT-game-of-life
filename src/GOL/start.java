@@ -2,11 +2,16 @@ package GOL;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class start {
     private final JFrame frame;
     private static Cell[][] cellArr;
     public final int size = 100;
+    int control =0;
+    int r=0,gr=0,b=0;
+    Color color;
+    Color color2;
 
     public static Cell[][] getCellArr() {
         return cellArr;
@@ -16,12 +21,63 @@ public class start {
         frame = new JFrame();
         frame.setSize(915, 937);
         cellArr = new Cell[size][size];
+        String option = JOptionPane.showInputDialog("1-gen,2-load, 3-sym");
         createCanvas();
-        frame.add(new grid(), BorderLayout.CENTER);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Game of life");
-        frame.setVisible(true);
+        if( option.equals("1")){
+            new BoardGenerator();
+        }else if (option.equals("2")||option.equals("3")){
+            if (option.equals("2")){
+                String filename = JOptionPane.showInputDialog("Type filename of saved game");
+                if (!loadFromFile(filename)) {
+                    JOptionPane.showMessageDialog(
+                            null, "No games with that path/name",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+            frame.add(new grid(), BorderLayout.CENTER);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setTitle("Game of life");
+            frame.setVisible(true);
+
+        }
+
+
+
+    }
+
+    public static void saveToFile(String fileName) {
+        try {
+            FileOutputStream fileOut =
+                    new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(getCellArr());
+            out.close();
+            fileOut.close();
+            System.out.print("Game saved as: " + fileName);
+        }
+        catch (IOException | NullPointerException ignored) {
+        }
+    }
+
+    public static boolean loadFromFile(String fileName) {
+        try {
+            FileInputStream fileIn = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            cellArr = (Cell[][]) in.readObject();
+            in.close();
+            fileIn.close();
+            return true;
+        } catch (FileNotFoundException e){
+            System.out.println("File not found");
+            return false;
+        } catch (IOException | NullPointerException i) {
+            return false;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Box class not found");
+            return false;
+        }
     }
 
     class grid extends JPanel {
@@ -29,13 +85,14 @@ public class start {
             super.paintComponent(g);
             int value = 990 / size;
 
+
             for (int y = 0; y < size; y++) {
                 for (int x = 0; x < size; x++) {
 
                     if (cellArr[y][x].getNextState()== State.ALIVE) {
-                        g.setColor(Color.white);
+                        g.setColor(color2);
                     } else {
-                        g.setColor(Color.black);
+                        g.setColor(color);
                     }
                     g.fillRect(value * cellArr[y][x].getCol(), value * cellArr[y][x].getRow(), value, value);
                     cellArr[y][x].setPreviousState(cellArr[y][x].getNextState());
@@ -44,9 +101,25 @@ public class start {
             try {
                 Thread.sleep(15);
             } catch (InterruptedException ignored) {}
+            color = new Color(r,gr,b);
+            color2 = new Color(255-r,255-gr, 255-b);
+            control++;
+            if (control>=0 && control<=255) r++;
+            else if (control>255 && control<=510) gr++;
+            else if (control>510 && control<=765) b++;
+            else if (control>765 && control<=1020) r--;
+            else if (control>1020 && control<=1275) gr--;
+            else if (control>1275 && control<=1530) b--;
+            else{
+                control=0;
+                r=0;
+                b=0;
+                gr=0;
+            }
 
             nextState();
         }
+
     }
 
     public void nextState(){
