@@ -1,5 +1,6 @@
 package GOL;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 enum State{
@@ -28,9 +29,24 @@ public class Cell {
     }
 
     public Cell checkNegative(int row, int col) {
-        if (col < 0 || row < 0 || col > start.getCellArr().length - 1 ||
-                row > start.getCellArr().length - 1) return null;
-        else return start.getCellArr()[row][col];
+        int size = start.getCellArr().length;
+        boolean niePrzechodzi = false;
+        if (niePrzechodzi){
+            if (col < 0 || row < 0 || col > size - 1 ||
+                    row > size - 1)
+                return null;
+            else return start.getCellArr()[row][col];
+
+        }else {
+            int newRow, newCol;
+            if (row == -1) newRow = size-1;
+            else if (row == size) newRow = 0;
+            else newRow = row;
+            if (col == -1) newCol = size-1;
+            else if (col == size) newCol = 0;
+            else newCol = col;
+            return start.getCellArr()[newRow][newCol];
+        }
     }
 
     public Integer checkNeighbors() {

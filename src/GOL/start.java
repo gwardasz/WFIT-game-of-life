@@ -41,7 +41,6 @@ public class start {
                     cellArr[y][x].setPreviousState(cellArr[y][x].getNextState());
                 }
             }
-
             try {
                 Thread.sleep(15);
             } catch (InterruptedException ignored) {}
