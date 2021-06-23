@@ -17,33 +17,26 @@ public class Cell implements Serializable {
         this.col = col;
         this.row = row;
 
-        /* test init
-        if ((this.row%7 == 0 || this.row == 50 || this.row == 51)
-                && (this.col%4 == 0 || this.col == 50 || this.col == 51))
-        this.nextState = State.ALIVE;
-         */
-
         boolean alive = new Random().nextBoolean();
         if (alive) this.nextState = State.ALIVE;
         else this.nextState = State.DEAD;
     }
 
     public Cell checkNegative(int row, int col) {
-        int size = start.getCellArr().length;
 
         if (start.isNiePrzechodzi()){
-            if (col < 0 || row < 0 || col > size - 1 ||
-                    row > size - 1)
+            if (col < 0 || row < 0 || col > start.SIZE - 1 ||
+                    row > start.SIZE - 1)
                 return null;
             else return start.getCellArr()[row][col];
 
         }else {
             int newRow, newCol;
-            if (row == -1) newRow = size-1;
-            else if (row == size) newRow = 0;
+            if (row == -1) newRow = start.SIZE - 1;
+            else if (row == start.SIZE) newRow = 0;
             else newRow = row;
-            if (col == -1) newCol = size-1;
-            else if (col == size) newCol = 0;
+            if (col == -1) newCol = start.SIZE-1;
+            else if (col == start.SIZE) newCol = 0;
             else newCol = col;
             return start.getCellArr()[newRow][newCol];
         }

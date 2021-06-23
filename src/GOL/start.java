@@ -8,7 +8,7 @@ public class start {
     private final JFrame frame;
     private static Cell[][] cellArr;
     private static boolean niePrzechodzi = false; // weź to pls zmień jak pamiętasz na tą jego angielską nazwę o tych krawędziach
-    public final int size = 100;
+    public static final int SIZE = 100;
     int control =0;
     int r=0,gr=0,b=0;
     Color color;
@@ -22,7 +22,7 @@ public class start {
     public start() {
         frame = new JFrame();
         frame.setSize(915, 937);
-        cellArr = new Cell[size][size];
+        cellArr = new Cell[SIZE][SIZE];
         String option = JOptionPane.showInputDialog("1-gen,2-load, 3-sym");
         createCanvas();
         if( option.equals("1")){
@@ -86,11 +86,11 @@ public class start {
     class grid extends JPanel {
         public void paintComponent(Graphics g){
             super.paintComponent(g);
-            int value = 990 / size;
+            int value = 990 / SIZE;
 
 
-            for (int y = 0; y < size; y++) {
-                for (int x = 0; x < size; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                for (int x = 0; x < SIZE; x++) {
 
                     if (cellArr[y][x].getNextState()== State.ALIVE) {
                         g.setColor(color2);
@@ -126,8 +126,8 @@ public class start {
     }
 
     public void nextState(){
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size ; x++) {
+        for (int y = 0; y < SIZE; y++) {
+            for (int x = 0; x < SIZE; x++) {
                 int aliveNeighbours = cellArr[y][x].checkNeighbors();
                     if (cellArr[y][x].getPreviousState()==State.DEAD &&
                             aliveNeighbours == 3) cellArr[y][x].setNextState(State.ALIVE);
@@ -142,8 +142,8 @@ public class start {
     }
 
     public void createCanvas() {
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
+        for (int y = 0; y < SIZE; y++) {
+            for (int x = 0; x < SIZE; x++) {
                 cellArr[y][x] = new Cell(y, x);
             }
         }

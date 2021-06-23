@@ -15,7 +15,7 @@ public class BoardGenerator extends JFrame implements ActionListener {
     public BoardGenerator() {
         setTitle("Board");
         setSize(1000, 1000);
-        setLayout(new GridLayout(100,100));
+        setLayout(new GridLayout(start.SIZE,start.SIZE));
         setLocationRelativeTo(null);
 
         JMenuBar menubar = new JMenuBar();
@@ -26,7 +26,7 @@ public class BoardGenerator extends JFrame implements ActionListener {
         initGrid();
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void initGrid(){
@@ -39,13 +39,7 @@ public class BoardGenerator extends JFrame implements ActionListener {
                 board[y][x].setForeground(Color.black);
                 add(board[y][x]);
                 board[y][x].addActionListener(this);
-                for (int i = 0; i < 100; i++) {
-                    for (int j = 0; j < 100; j++) {
-                        start.getCellArr()[i][j].setNextState(State.DEAD);
-
-                    }
-
-                }
+                start.getCellArr()[y][x].setNextState(State.DEAD);
             }
         }
     }
@@ -62,16 +56,16 @@ public class BoardGenerator extends JFrame implements ActionListener {
 
         }
 
-        for (int y = 0; y < 100; y++) {
-            for (int x = 0; x < 100; x++) {
+        for (int y = 0; y < start.SIZE; y++) {
+            for (int x = 0; x < start.SIZE; x++) {
                 JButton box = board[y][x];
                 if (source == box) {
-                    Color foreground = box.getBackground();
-                    if (!Color.black.equals(foreground)) {
+                    Color background = box.getBackground();
+                    if (!Color.black.equals(background)) {
                         box.setBackground(Color.black);
                         start.getCellArr()[y][x].setNextState(State.ALIVE);
-                    } else if (!Color.white.equals(foreground)) {
-                        box.setBackground(Color.white);
+                    } else{
+                        box.setBackground(null);
                         start.getCellArr()[y][x].setNextState(State.DEAD);
                     }
                 }
